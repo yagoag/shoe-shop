@@ -69,6 +69,20 @@ footer .content {
   padding: 32px;
 }
 
+main .content .no-portal-error {
+  background-color: #508991;
+  color: #ffffff;
+  border: 1px solid #004346;
+  border-radius: 5px;
+  padding: 32px;
+  line-height: 1.6;
+}
+
+main .content .no-portal-error h2 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+}
+
 main .item-card {
   background: none;
   border: 1px solid #a7a2a9;
