@@ -12,3 +12,13 @@ const verifyPortalAvailability = () => {
     content.appendChild(errorMessage);
   }
 };
+
+const createPortal = (src, className) => {
+  const portal = document.createElement('portal');
+  portal.src = src;
+  portal.className = className;
+  portal.addEventListener('animationend', () => {
+    portal.activate();
+  });
+  document.querySelector('body').appendChild(portal);
+};

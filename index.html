@@ -14,13 +14,16 @@
   <body onload="verifyPortalAvailability()">
     <header>
       <div class="content">
-        <h1>Shoe Shop</h1>
+        <a href="/"><h1>Shoe Shop</h1></a>
         <button>View Cart</button>
       </div>
     </header>
     <main>
       <div class="content">
-        <button class="item-card">
+        <button
+          class="item-card"
+          onclick="createPortal('/product/?id=1', 'product-portal')"
+        >
           <img
             src="https://images.unsplash.com/photo-1560072810-1cffb09faf0f?fit=crop&w=600&h=400"
             alt="blue sneakers over a fishing net"
@@ -30,7 +33,10 @@
           <div class="price">$ 74.90</div>
         </button>
 
-        <button class="item-card">
+        <button
+          class="item-card"
+          onclick="createPortal('/product/?id=2', 'product-portal')"
+        >
           <img
             src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?fit=crop&w=600&h=400"
             alt="light pink sneakers on a black background"
@@ -40,7 +46,10 @@
           <div class="price">$ 84.90</div>
         </button>
 
-        <button class="item-card">
+        <button
+          class="item-card"
+          onclick="createPortal('/product/?id=3', 'product-portal')"
+        >
           <img
             src="https://images.unsplash.com/photo-1549298916-b41d501d3772?fit=crop&w=600&h=400"
             alt="brown sneakers on an orange background"
@@ -50,7 +59,10 @@
           <div class="price">$ 84.90</div>
         </button>
 
-        <button class="item-card">
+        <button
+          class="item-card"
+          onclick="createPortal('/product/?id=4', 'product-portal')"
+        >
           <img
             src="https://images.unsplash.com/photo-1575456456278-936c89ccdb7b?fit=crop&w=600&h=400"
             alt="white and blue skeakers on a concrete floor"
@@ -60,7 +72,10 @@
           <div class="price">$ 84.90</div>
         </button>
 
-        <button class="item-card">
+        <button
+          class="item-card"
+          onclick="createPortal('/product/?id=5', 'product-portal')"
+        >
           <img
             src="https://images.unsplash.com/photo-1571736772567-3aa763ff559a?fit=crop&w=600&h=400"
             alt="white and pink skeakers on a concrete floor"
@@ -70,7 +85,10 @@
           <div class="price">$ 84.90</div>
         </button>
 
-        <button class="item-card">
+        <button
+          class="item-card"
+          onclick="createPortal('/product/?id=6', 'product-portal')"
+        >
           <img
             src="https://images.unsplash.com/photo-1584539696499-bff0b4768e4e?fit=crop&w=600&h=400"
             alt="person holding a turquoise sneaker over a white background"

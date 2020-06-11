@@ -43,7 +43,11 @@ header .content {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  max-width: 800px;
+  max-width: 810px;
+}
+
+header a {
+  text-decoration: none;
 }
 
 header h1 {
@@ -61,11 +65,17 @@ footer {
   justify-content: center;
 }
 
-main .content,
+main .content {
+  flex: 1;
+  max-width: 810px;
+  padding: 32px;
+  text-align: center;
+}
+
 footer .content {
   flex: 1;
   display: flex;
-  max-width: 800px;
+  max-width: 810px;
   padding: 32px;
 }
 
@@ -83,17 +93,23 @@ main .content .no-portal-error h2 {
   font-size: 24px;
 }
 
+main .content .no-portal-error p:last-child {
+  margin-bottom: 0;
+}
+
 main .item-card {
   background: none;
   border: 1px solid #a7a2a9;
   border-radius: 3px;
   padding: 8px 8px 12px 8px;
-  margin: 0 16px 16px 0;
+  margin: 8px;
   width: 250px;
+  height: 300px;
   text-align: left;
   vertical-align: top;
   cursor: pointer;
   color: #000000;
+  flex-direction: column;
 }
 
 main .item-card img {
@@ -123,10 +139,19 @@ main .item-card .price {
   font-size: 16px;
 }
 
+main .item-page {
+  display: flex;
+}
+
 main .item-page img {
   width: 50%;
   height: auto;
-  margin-right: 16px;
+}
+
+main .item-page > div {
+  flex: 1;
+  text-align: left;
+  margin-left: 24px;
 }
 
 main .item-page .price,
@@ -144,4 +169,24 @@ main .item-page .item-name {
 
 main .item-page button {
   margin-top: 16px;
+}
+
+portal.product-portal {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: #00000055 0 0 10px;
+  animation: slide-left 650ms;
+}
+
+@keyframes slide-left {
+  from {
+    transform: translateX(calc(100% + 10px));
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
