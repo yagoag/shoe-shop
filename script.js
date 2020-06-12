@@ -90,7 +90,7 @@ const createPortal = (src, className) => {
 };
 
 const loadProductList = async () => {
-  if (isPortalAvailable) {
+  if (isPortalAvailable()) {
     const content = document.querySelector('main > .content');
     content.innerHTML = '';
 
