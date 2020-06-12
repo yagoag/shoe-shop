@@ -1,6 +1,6 @@
 # 👟 Shoe Shop
 
-Small shoe e-commerce website using HTML portals for managing routes.
+Small shoe e-commerce website using HTML portals for creating a PWA-like experience of the routing.
 
 ### Enabling portals
 
