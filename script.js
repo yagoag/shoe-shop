@@ -98,7 +98,7 @@ const loadProductList = async () => {
       const itemCard = document.createElement('button');
       itemCard.className = 'item-card';
       itemCard.onclick = () =>
-        createPortal(`/product/?id=${product.id}`, 'product-portal');
+        createPortal(`./product/?id=${product.id}`, 'product-portal');
 
       const image = document.createElement('img');
       image.src = `${product.image.src}?fit=crop&w=600&h=400`;
