@@ -204,6 +204,7 @@ portal.product-portal {
   left: 0;
   box-shadow: #00000055 0 0 10px;
   animation: slide-left 650ms;
+  animation-play-state: paused;
 }
 
 @keyframes slide-left {

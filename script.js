@@ -85,6 +85,9 @@ const createPortal = (src, className) => {
   const portal = document.createElement('portal');
   portal.src = src;
   portal.className = className;
+  portal.addEventListener('load', () => {
+    portal.style.animationPlayState = 'running';
+  });
   portal.addEventListener('animationend', () => {
     portal.activate();
   });
