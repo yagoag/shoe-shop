@@ -186,46 +186,6 @@ main .item-page button {
   animation: blink alternate 1s infinite;
 }
 
-.skeleton.h-16 {
-  height: 16px;
-}
-
-.skeleton.h-18 {
-  height: 18px;
-}
-
-.skeleton.h-22 {
-  height: 22px;
-}
-
-.skeleton.h-26 {
-  height: 26px;
-}
-
-.skeleton.h-150 {
-  height: 150px;
-}
-
-.skeleton.w-50 {
-  width: 50px;
-}
-
-.skeleton.w-70 {
-  width: 70px;
-}
-
-.skeleton.w-180 {
-  width: 180px;
-}
-
-.skeleton.w-230 {
-  width: 230px;
-}
-
-.skeleton.w-50p {
-  width: 50%;
-}
-
 @keyframes blink {
   from {
     opacity: 1;
