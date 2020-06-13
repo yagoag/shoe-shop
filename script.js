@@ -60,6 +60,8 @@ const products = [
   },
 ];
 
+const shoeSizes = [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 13, 14, 15];
+
 const isPortalAvailable = () => {
   if (!('HTMLPortalElement' in window)) {
     const errorMessage = document.createElement('div');
@@ -87,6 +89,26 @@ const createPortal = (src, className) => {
     portal.activate();
   });
   document.querySelector('body').appendChild(portal);
+};
+
+const addItemToCart = (id) => {
+  localStorage.setItem(id, (parseInt(localStorage.getItem(id)) || 0) + 1);
+};
+
+const createSizeDropdown = () => {
+  const size = document.createElement('div');
+  size.className = 'shoe-size';
+  size.textContent = 'Size: ';
+  const sizeSelect = document.createElement('select');
+  shoeSizes.forEach((shoeSize) => {
+    const sizeOption = document.createElement('option');
+    sizeOption.textContent = shoeSize;
+    sizeOption.value = shoeSize;
+    sizeSelect.appendChild(sizeOption);
+  });
+  size.appendChild(sizeSelect);
+
+  return size;
 };
 
 const loadProductList = async () => {
@@ -124,5 +146,60 @@ const loadProductList = async () => {
 
       content.appendChild(itemCard);
     });
+  }
+};
+
+const loadProductInfo = async () => {
+  if (isPortalAvailable()) {
+    const content = document.querySelector('main > .content');
+    content.innerHTML = '';
+
+    const id = parseInt(new URLSearchParams(window.location.search).get('id'));
+    const product = products.find((prod) => prod.id === id);
+
+    const image = document.createElement('img');
+    image.src = image.src = `${product.image.src}?fit=crop&w=600&h=400`;
+    image.alt = product.image.alt;
+    content.appendChild(image);
+
+    const info = document.createElement('div');
+    const itemName = document.createElement('div');
+    itemName.className = 'item-name';
+    itemName.textContent = product.name;
+    info.appendChild(itemName);
+
+    if (product.originalPrice) {
+      const originalPrice = document.createElement('div');
+      originalPrice.className = 'original-price';
+      originalPrice.textContent = `$${product.originalPrice.toFixed(2)}`;
+      info.appendChild(originalPrice);
+    }
+
+    const price = document.createElement('div');
+    price.className = 'price';
+    price.textContent = `$${product.price.toFixed(2)}`;
+    info.appendChild(price);
+
+    info.appendChild(createSizeDropdown());
+
+    const addToCart = document.createElement('button');
+    addToCart.textContent = 'Add to cart';
+    addToCart.onclick = () => addItemToCart(id);
+    info.appendChild(addToCart);
+
+    content.appendChild(info);
+
+    // TODO: change page title
+
+    // <img
+    //       src="https://images.unsplash.com/photo-1560072810-1cffb09faf0f?fit=crop&w=600&h=400"
+    //       alt="blue sneakers over a fishing net"
+    //     />
+    //     <div>
+    //       <div class="item-name">ASICS X Mita GEL-Kayano Trainer</div>
+    //       <div class="original-price">$ 99.90</div>
+    //       <div class="price">$ 74.90</div>
+    //       <button>Add to cart</button>
+    //     </div>
   }
 };

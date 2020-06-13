@@ -167,6 +167,14 @@ main .item-page .item-name {
   margin-bottom: 16px;
 }
 
+main .item-page .shoe-size {
+  margin: 16px 0;
+}
+
+main .item-page .shoe-size select {
+  font-size: 16px;
+}
+
 main .item-page button {
   margin-top: 16px;
 }
@@ -190,6 +198,10 @@ main .item-page button {
   height: 22px;
 }
 
+.skeleton.h-26 {
+  height: 26px;
+}
+
 .skeleton.h-150 {
   height: 150px;
 }
@@ -208,6 +220,10 @@ main .item-page button {
 
 .skeleton.w-230 {
   width: 230px;
+}
+
+.skeleton.w-50p {
+  width: 50%;
 }
 
 @keyframes blink {
