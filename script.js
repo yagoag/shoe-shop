@@ -107,16 +107,22 @@ const updateCart = (id, size, operation = 'add') => {
   ({
     add: () => {
       entry.quantity += 1;
+
+      if (entryIndex !== -1) {
+        cart[entryIndex] = entry;
+      } else {
+        cart.push(entry);
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+    },
+    remove: () => {
+      localStorage.setItem(
+        'cart',
+        JSON.stringify(cart.filter((_, index) => index !== entryIndex)),
+      );
     },
   }[operation]());
-
-  if (entryIndex !== -1) {
-    cart[entryIndex] = entry;
-  } else {
-    cart.push(entry);
-  }
-
-  localStorage.setItem('cart', JSON.stringify(cart));
 };
 
 const createSizeDropdown = () => {
@@ -135,7 +141,7 @@ const createSizeDropdown = () => {
   return size;
 };
 
-const loadProductList = async () => {
+const loadProductList = () => {
   if (isPortalAvailable()) {
     const content = document.querySelector('main > .content');
     content.innerHTML = '';
@@ -144,7 +150,7 @@ const loadProductList = async () => {
       const itemCard = document.createElement('button');
       itemCard.className = 'item-card';
       itemCard.onclick = () =>
-        createPortal(`./product/?id=${product.id}`, 'product-portal');
+        createPortal(`./product/?id=${product.id}`, 'right-portal');
 
       const image = document.createElement('img');
       image.src = `${product.image.src}?fit=crop&w=600&h=400`;
@@ -173,7 +179,7 @@ const loadProductList = async () => {
   }
 };
 
-const loadProductInfo = async () => {
+const loadProductInfo = () => {
   if (isPortalAvailable()) {
     const content = document.querySelector('main > .content');
     content.innerHTML = '';
@@ -215,5 +221,83 @@ const loadProductInfo = async () => {
     content.appendChild(info);
 
     document.title = `${product.name} - Shoe Shop`;
+  }
+};
+
+loadCartItems = () => {
+  if (isPortalAvailable()) {
+    const cartItems = JSON.parse(localStorage.getItem('cart'));
+    const content = document.querySelector('main > .content');
+    content.innerHTML = '';
+
+    if (!cartItems || cartItems.length === 0) {
+      const emptyCartMsg = document.createElement('div');
+      emptyCartMsg.className = 'empty-cart';
+      emptyCartMsg.textContent = 'No items on your cart yet.';
+
+      content.appendChild(emptyCartMsg);
+    } else {
+      cartItems
+        .map((item) => ({
+          ...item,
+          ...products.find((product) => product.id === item.id),
+        }))
+        .forEach((item) => {
+          const cartItem = document.createElement('div');
+          cartItem.className = 'cart-item';
+
+          const image = document.createElement('img');
+          image.src = image.src = `${item.image.src}?fit=crop&w=600&h=400`;
+          image.alt = item.image.alt;
+          cartItem.appendChild(image);
+
+          const info = document.createElement('div');
+          info.className = 'info';
+
+          const itemName = document.createElement('div');
+          itemName.className = 'item-name';
+          itemName.textContent = item.name;
+          info.appendChild(itemName);
+
+          const quantity = document.createElement('div');
+          quantity.className = 'quantity';
+          quantity.textContent = `Quantity: ${item.quantity}`;
+          info.appendChild(quantity);
+
+          const size = document.createElement('div');
+          size.className = 'shoe-size';
+          size.textContent = `Size: ${item.size}`;
+          info.appendChild(size);
+
+          if (item.originalPrice) {
+            const originalPrice = document.createElement('div');
+            originalPrice.className = 'original-price';
+            originalPrice.textContent = `$${item.originalPrice.toFixed(2)}`;
+            info.appendChild(originalPrice);
+          }
+
+          const price = document.createElement('div');
+          price.className = 'price';
+          price.textContent = `$${item.price.toFixed(2)}`;
+          info.appendChild(price);
+
+          cartItem.appendChild(info);
+
+          const actions = document.createElement('div');
+          actions.className = 'actions';
+
+          const removeItem = document.createElement('button');
+          removeItem.textContent = 'Remove';
+          removeItem.onclick = () => {
+            updateCart(item.id, item.size, 'remove');
+            loadCartItems();
+          };
+          actions.appendChild(removeItem);
+
+          cartItem.appendChild(actions);
+
+          content.appendChild(cartItem);
+        });
+    }
   }
 };

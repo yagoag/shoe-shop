@@ -74,7 +74,6 @@ main .content {
 
 footer .content {
   flex: 1;
-  display: flex;
   max-width: 810px;
   padding: 32px;
 }
@@ -179,6 +178,72 @@ main .item-page button {
   margin-top: 16px;
 }
 
+main .cart-item {
+  border: 1px solid #a7a2a9;
+  border-radius: 3px;
+  padding: 8px 8px 12px 8px;
+  margin: 8px;
+  height: 150px;
+  flex: 1;
+  color: #000000;
+  display: flex;
+  text-align: left;
+  align-items: center;
+}
+
+main .cart-item img {
+  height: 100%;
+  width: auto;
+}
+
+main .cart-item .info {
+  flex: 1;
+  margin: 0 24px;
+}
+
+main .cart-item .info > div {
+  line-height: 1.6;
+}
+
+main .cart-item .info .item-name {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+main .cart-item .actions {
+  margin-right: 24px;
+}
+
+@media screen and (max-width: 560px) {
+  main .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    height: unset;
+  }
+
+  main .cart-item img {
+    width: 100%;
+    height: auto;
+  }
+
+  main .cart-item .info {
+    margin: 16px;
+  }
+
+  main .cart-item .actions {
+    margin-right: unset;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+main .empty-cart {
+  font-size: 20px;
+  color: #a7a2a9;
+  margin: 64px 0;
+}
+
 .skeleton {
   margin: 4px 0;
   background-color: #a7a2a9;
@@ -196,14 +261,14 @@ main .item-page button {
   }
 }
 
-portal.product-portal {
+portal.right-portal {
   width: 100vw;
   height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
   box-shadow: #00000055 0 0 10px;
-  animation: slide-left 650ms;
+  animation: slide-left 500ms;
   animation-play-state: paused;
 }
 
@@ -214,5 +279,26 @@ portal.product-portal {
 
   to {
     transform: translateX(0);
+  }
+}
+
+portal.top-portal {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: #00000055 0 0 10px;
+  animation: slide-down 500ms;
+  animation-play-state: paused;
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(calc(100% + 10px));
+  }
+
+  to {
+    transform: translateY(0);
   }
 }
