@@ -94,8 +94,29 @@ const createPortal = (src, className) => {
   document.querySelector('body').appendChild(portal);
 };
 
-const addItemToCart = (id) => {
-  localStorage.setItem(id, (parseInt(localStorage.getItem(id)) || 0) + 1);
+const updateCart = (id, size, operation = 'add') => {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  const entry = cart.find((prod) => prod.id === id && prod.size === size) || {
+    id,
+    size,
+    quantity: 0,
+  };
+  const entryIndex = cart.indexOf(entry);
+
+  ({
+    add: () => {
+      entry.quantity += 1;
+    },
+  }[operation]());
+
+  if (entryIndex !== -1) {
+    cart[entryIndex] = entry;
+  } else {
+    cart.push(entry);
+  }
+
+  localStorage.setItem('cart', JSON.stringify(cart));
 };
 
 const createSizeDropdown = () => {
@@ -187,22 +208,12 @@ const loadProductInfo = async () => {
 
     const addToCart = document.createElement('button');
     addToCart.textContent = 'Add to cart';
-    addToCart.onclick = () => addItemToCart(id);
+    addToCart.onclick = () =>
+      updateCart(id, document.querySelector('select').value);
     info.appendChild(addToCart);
 
     content.appendChild(info);
 
-    // TODO: change page title
-
-    // <img
-    //       src="https://images.unsplash.com/photo-1560072810-1cffb09faf0f?fit=crop&w=600&h=400"
-    //       alt="blue sneakers over a fishing net"
-    //     />
-    //     <div>
-    //       <div class="item-name">ASICS X Mita GEL-Kayano Trainer</div>
-    //       <div class="original-price">$ 99.90</div>
-    //       <div class="price">$ 74.90</div>
-    //       <button>Add to cart</button>
-    //     </div>
+    document.title = `${product.name} - Shoe Shop`;
   }
 };
