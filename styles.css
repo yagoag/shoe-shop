@@ -46,10 +46,6 @@ header .content {
   max-width: 810px;
 }
 
-header a {
-  text-decoration: none;
-}
-
 header h1 {
   margin: 0;
   padding: 0;
@@ -57,6 +53,7 @@ header h1 {
   font-weight: 500;
   text-transform: uppercase;
   color: #172a3a;
+  cursor: pointer;
 }
 
 main,
@@ -261,15 +258,17 @@ main .empty-cart {
   }
 }
 
-portal.right-portal {
+portal {
   width: 100vw;
   height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
   box-shadow: #00000055 0 0 10px;
-  animation: slide-left 500ms;
-  animation-play-state: paused;
+}
+
+portal.right-portal {
+  animation: slide-left 500ms paused;
 }
 
 @keyframes slide-left {
@@ -282,20 +281,27 @@ portal.right-portal {
   }
 }
 
+portal.left-portal {
+  animation: slide-right 500ms paused;
+}
+
+@keyframes slide-right {
+  from {
+    transform: translateX(calc(-100% - 10px));
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
 portal.top-portal {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-shadow: #00000055 0 0 10px;
-  animation: slide-down 500ms;
-  animation-play-state: paused;
+  animation: slide-down 500ms paused;
 }
 
 @keyframes slide-down {
   from {
-    transform: translateY(calc(100% + 10px));
+    transform: translateY(calc(-100% - 10px));
   }
 
   to {

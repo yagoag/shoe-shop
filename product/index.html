@@ -32,8 +32,10 @@
   <body onload="loadProductInfo()">
     <header>
       <div class="content">
-        <a href="../"><h1>Shoe Shop</h1></a>
-        <button>View Cart</button>
+        <h1 onclick="createPortal('../', 'left-portal')">Shoe Shop</h1>
+        <button onclick="createPortal('../cart', 'top-portal')">
+          View Cart
+        </button>
       </div>
     </header>
 
