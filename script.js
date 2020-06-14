@@ -87,11 +87,28 @@ const createPortal = (src, className) => {
   portal.className = className;
   portal.addEventListener('load', () => {
     portal.style.animationPlayState = 'running';
+    document.querySelector('.page-load').remove();
   });
   portal.addEventListener('animationend', () => {
     portal.activate();
   });
   document.querySelector('body').appendChild(portal);
+
+  const loading = document.createElement('div');
+  loading.className = 'page-load';
+  document.querySelector('body').appendChild(loading);
+};
+
+const loadCartSize = () => {
+  const cart = JSON.parse(localStorage.getItem('cart'));
+
+  if (cart?.length > 0) {
+    document.querySelector(
+      'header .content .cart > span',
+    ).textContent = cart.reduce((prev, cur) => prev + cur.quantity, 0);
+  } else {
+    document.querySelector('header .content .cart > span').textContent = '0';
+  }
 };
 
 const updateCart = (id, size, operation = 'add') => {
@@ -115,6 +132,8 @@ const updateCart = (id, size, operation = 'add') => {
       }
 
       localStorage.setItem('cart', JSON.stringify(cart));
+
+      loadCartSize();
     },
     remove: () => {
       localStorage.setItem(
@@ -143,11 +162,13 @@ const createSizeDropdown = () => {
 
 const loadProductList = () => {
   if (isPortalAvailable()) {
+    loadCartSize();
+
     const content = document.querySelector('main > .content');
     content.innerHTML = '';
 
     products.forEach((product) => {
-      const itemCard = document.createElement('button');
+      const itemCard = document.createElement('div');
       itemCard.className = 'item-card';
       itemCard.onclick = () =>
         createPortal(`./product/?id=${product.id}`, 'right-portal');
@@ -174,6 +195,11 @@ const loadProductList = () => {
       price.textContent = `$${product.price.toFixed(2)}`;
       itemCard.appendChild(price);
 
+      const viewBtn = document.createElement('button');
+      viewBtn.className = 'view-product';
+      viewBtn.textContent = 'View Product';
+      itemCard.appendChild(viewBtn);
+
       content.appendChild(itemCard);
     });
   }
@@ -181,6 +207,8 @@ const loadProductList = () => {
 
 const loadProductInfo = () => {
   if (isPortalAvailable()) {
+    loadCartSize();
+
     const content = document.querySelector('main > .content');
     content.innerHTML = '';
 
@@ -214,8 +242,12 @@ const loadProductInfo = () => {
 
     const addToCart = document.createElement('button');
     addToCart.textContent = 'Add to cart';
-    addToCart.onclick = () =>
+    addToCart.onclick = (e) => {
+      console.log(e.target);
       updateCart(id, document.querySelector('select').value);
+      e.target.textContent = 'Added ✓';
+      setTimeout(() => (e.target.textContent = 'Add to cart'), 3000);
+    };
     info.appendChild(addToCart);
 
     content.appendChild(info);
@@ -226,6 +258,8 @@ const loadProductInfo = () => {
 
 loadCartItems = () => {
   if (isPortalAvailable()) {
+    loadCartSize();
+
     const cartItems = JSON.parse(localStorage.getItem('cart'));
     const content = document.querySelector('main > .content');
     content.innerHTML = '';

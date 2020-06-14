@@ -31,18 +31,19 @@
   <body onload="loadProductList()">
     <header>
       <div class="content">
+        <button onclick="createPortal('./', 'left-portal')">Home</button>
         <h1 onclick="createPortal('./', 'left-portal')">Shoe Shop</h1>
-        <button onclick="createPortal('./cart', 'top-portal')">
-          View Cart
+        <button class="cart" onclick="createPortal('./cart', 'top-portal')">
+          Cart <span>0</span>
         </button>
       </div>
     </header>
     <main>
-      <div class="content">
-        <button class="item-card">
+      <div class="content home">
+        <div class="item-card">
           <div
             class="skeleton"
-            style="width: 230px; height: 150px; margin-bottom: 16px;"
+            style="width: 220px; height: 145px; margin-bottom: 16px;"
           ></div>
           <div
             class="skeleton"
@@ -53,12 +54,12 @@
             style="width: 50px; height: 16px; margin-bottom: 8px;"
           ></div>
           <div class="skeleton" style="width: 70px; height: 18px;"></div>
-        </button>
+        </div>
 
-        <button class="item-card">
+        <div class="item-card">
           <div
             class="skeleton"
-            style="width: 230px; height: 150px; margin-bottom: 16px;"
+            style="width: 220px; height: 145px; margin-bottom: 16px;"
           ></div>
           <div
             class="skeleton"
@@ -69,12 +70,12 @@
             style="width: 50px; height: 16px; margin-bottom: 8px;"
           ></div>
           <div class="skeleton" style="width: 70px; height: 18px;"></div>
-        </button>
+        </div>
 
-        <button class="item-card">
+        <div class="item-card">
           <div
             class="skeleton"
-            style="width: 230px; height: 150px; margin-bottom: 16px;"
+            style="width: 220px; height: 145px; margin-bottom: 16px;"
           ></div>
           <div
             class="skeleton"
@@ -85,7 +86,7 @@
             style="width: 50px; height: 16px; margin-bottom: 8px;"
           ></div>
           <div class="skeleton" style="width: 70px; height: 18px;"></div>
-        </button>
+        </div>
       </div>
     </main>
     <footer>

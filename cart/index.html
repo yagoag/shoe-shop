@@ -32,7 +32,12 @@
   <body onload="loadCartItems()">
     <header>
       <div class="content">
+        <button onclick="createPortal('../', 'left-portal')">Home</button>
         <h1 onclick="createPortal('../', 'left-portal')">Shoe Shop</h1>
+        <button class="cart" onclick="createPortal('../cart', 'top-portal')">
+          Cart
+          <span>0</span>
+        </button>
       </div>
     </header>
 
