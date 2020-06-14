@@ -279,6 +279,8 @@ loadCartItems = () => {
         .forEach((item) => {
           const cartItem = document.createElement('div');
           cartItem.className = 'cart-item';
+          cartItem.onclick = () =>
+            createPortal(`../product/?id=${item.id}`, 'right-portal');
 
           const image = document.createElement('img');
           image.src = image.src = `${item.image.src}?fit=crop&w=600&h=400`;
@@ -322,7 +324,8 @@ loadCartItems = () => {
 
           const removeItem = document.createElement('button');
           removeItem.textContent = 'Remove';
-          removeItem.onclick = () => {
+          removeItem.onclick = (e) => {
+            e.stopPropagation();
             updateCart(item.id, item.size, 'remove');
             loadCartItems();
           };

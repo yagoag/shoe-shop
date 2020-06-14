@@ -197,6 +197,7 @@ main .cart-item {
   display: flex;
   text-align: left;
   align-items: center;
+  cursor: pointer;
 }
 
 main .cart-item img {
