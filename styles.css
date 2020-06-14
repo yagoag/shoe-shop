@@ -47,6 +47,7 @@ header .content h1 {
   text-transform: uppercase;
   color: #172a3a;
   cursor: pointer;
+  text-align: center;
 }
 
 header .content .cart > span {
@@ -186,6 +187,26 @@ main .item-page .shoe-size select {
 
 main .item-page button {
   margin-top: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  main .item-page {
+    flex-direction: column;
+  }
+
+  main .item-page img {
+    width: 100%;
+    max-height: auto;
+  }
+
+  main .item-page > div {
+    margin-left: 0;
+    margin-top: 16px;
+  }
+
+  main .item-page .shoe-size {
+    margin: 8px 0;
+  }
 }
 
 main .cart-item {
