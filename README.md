@@ -1,6 +1,6 @@
 # 👟 Shoe Shop
 
-Small demo of a shoe e-commerce website using HTML portals to create a PWA-like experience of the routing.
+Small demo of a shoe e-commerce website using HTML portals to create an SPA-like experience for page changes and routing.
 
 ![Preview of the Shoe Shop application](preview.gif)
 
