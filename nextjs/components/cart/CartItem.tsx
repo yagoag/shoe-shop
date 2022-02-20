@@ -3,11 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { VFC } from 'react';
 
-type Item = {
-  id: string;
+export type Item = {
+  id: string | number;
   name: string;
   size: number;
-  originalPrice: number;
+  originalPrice?: number;
   price: number;
   quantity: number;
   image: {
