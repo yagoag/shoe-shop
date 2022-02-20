@@ -4,6 +4,7 @@ const Document = () => {
   return (
     <Html>
       <Head>
+        <link rel="icon" href="/favicon.ico" />
         <link
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap"
           rel="stylesheet"
