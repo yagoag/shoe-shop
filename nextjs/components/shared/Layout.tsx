@@ -1,7 +1,15 @@
-import Link from 'next/link';
 import { FC } from 'react';
+import Link from 'next/link';
+import { useQuery } from 'react-query';
+import { Cart as CartModel } from 'models/Cart';
+
+export const CART_SIZE_QUERY_KEY = 'cart-size';
 
 export const Layout: FC = ({ children }) => {
+  const { data: cartSize } = useQuery(CART_SIZE_QUERY_KEY, () =>
+    CartModel.getSize()
+  );
+
   return (
     <>
       <header>
@@ -14,7 +22,7 @@ export const Layout: FC = ({ children }) => {
           </Link>
           <Link href="/cart" passHref>
             <button className="cart">
-              Cart <span>0</span>
+              Cart <span>{cartSize}</span>
             </button>
           </Link>
         </div>

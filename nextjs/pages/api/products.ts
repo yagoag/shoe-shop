@@ -2,7 +2,7 @@ import { Product } from 'components/details';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(
-  req: NextApiRequest,
+  _req: NextApiRequest,
   res: NextApiResponse<Product[]>
 ) {
   res.status(200).json(mockShoeStock);

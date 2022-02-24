@@ -2,7 +2,7 @@ import { Product } from 'components/details';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { mockShoeStock } from '../products';
 
-type ProductDetails = {
+export type ProductDetails = {
   sizes: number[];
 } & Product;
 

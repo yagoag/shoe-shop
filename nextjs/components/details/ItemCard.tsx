@@ -1,7 +1,6 @@
-import { Skeleton } from 'components/shared';
-import Image from 'next/image';
-import Link from 'next/link';
 import { VFC } from 'react';
+import Link from 'next/link';
+import { Skeleton } from 'components/shared';
 
 export type Product = {
   id: string | number;
@@ -28,7 +27,7 @@ export const ItemCard: VFC<ItemCardProps> = ({
     <Link href={`/product/${product?.id}`}>
       <div className="item-card" {...props}>
         {product?.image ? (
-          <Image
+          <img
             src={`${product.image.src}?fit=crop&w=600&h=400`}
             alt={product.image.alt}
           />
