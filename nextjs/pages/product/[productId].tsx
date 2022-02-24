@@ -1,4 +1,9 @@
-import { ChangeEventHandler, useCallback, useState } from 'react';
+import {
+  ChangeEventHandler,
+  MouseEventHandler,
+  useCallback,
+  useState,
+} from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
@@ -6,9 +11,11 @@ import { Cart } from 'models';
 import { ProductDetails } from 'pages/api/products/[id]';
 import { Skeleton } from 'components/shared';
 
-const Post = () => {
+const ProductPage = () => {
   const router = useRouter();
   const { productId } = router.query;
+
+  const [recentlyAddedToCard, setRecentlyAddedToCart] = useState(false);
 
   const [selectedSize, setSelectedSize] = useState<number>();
   const { data: product, isLoading } = useQuery<ProductDetails | null>(
@@ -17,6 +24,11 @@ const Post = () => {
       productId !== undefined
         ? fetch(`/api/products/${productId}`).then(async (res) => {
             const response = await res.json();
+
+            if (!res.ok) {
+              throw new Error(response?.mesage);
+            }
+
             setSelectedSize(response.sizes?.[0]);
             return response;
           })
@@ -27,6 +39,14 @@ const Post = () => {
     (e) => setSelectedSize(e.target.value),
     []
   );
+
+  const addToCart = useCallback<MouseEventHandler<HTMLButtonElement>>(() => {
+    if (product && selectedSize) {
+      Cart.updateCart({ id: product.id, size: selectedSize });
+      setRecentlyAddedToCart(true);
+      setTimeout(() => setRecentlyAddedToCart(false), 3000);
+    }
+  }, [product, selectedSize]);
 
   return (
     <>
@@ -81,18 +101,12 @@ const Post = () => {
             <Skeleton width={120} height={23} mb={32} loading={isLoading} />
           )}
 
-          {/* TODO create "added" feedback */}
           {product ? (
-            <button
-              onClick={() =>
-                selectedSize &&
-                Cart.updateCart({ id: product.id, size: selectedSize })
-              }
-            >
-              Add to cart
+            <button onClick={addToCart}>
+              {recentlyAddedToCard ? 'Added ✓' : 'Add to cart'}
             </button>
           ) : (
-            <Skeleton width={110} height={43} />
+            <Skeleton width={110} height={43} loading={isLoading} />
           )}
         </div>
       </div>
@@ -100,4 +114,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default ProductPage;
