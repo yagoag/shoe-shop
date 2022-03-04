@@ -1,7 +1,13 @@
+export enum CartOperations {
+  ADD = 'ADD',
+  REMOVE = 'REMOVE',
+  DECREASE = 'DECREASE',
+}
+
 type UpdateCartParams = {
   id: string | number;
-  size: number;
-  operation?: 'add' | 'remove';
+  size: string | number;
+  operation?: CartOperations;
 };
 
 type CartItem = {
@@ -17,8 +23,12 @@ const localStorage = (() => {
 const CART_STORAGE_KEY = 'cart';
 
 export class Cart {
-  static updateCart({ id, size, operation = 'add' }: UpdateCartParams): void {
-    const items = Cart.loadCart();
+  static updateCart({
+    id,
+    size,
+    operation = CartOperations.ADD,
+  }: UpdateCartParams): void {
+    let items = Cart.loadCart();
 
     const entry = items.find(
       (prod) => prod.id === id && prod.size === size
@@ -29,25 +39,26 @@ export class Cart {
     };
     const entryIndex = items.indexOf(entry);
 
-    ({
-      add: () => {
+    if (
+      operation === CartOperations.REMOVE ||
+      (operation === CartOperations.DECREASE && entry.quantity <= 1)
+    ) {
+      items = items.filter((_, index) => index !== entryIndex);
+    } else {
+      if (operation === CartOperations.DECREASE) {
+        entry.quantity -= 1;
+      } else {
         entry.quantity += 1;
+      }
 
-        if (entryIndex !== -1) {
-          items[entryIndex] = entry;
-        } else {
-          items.push(entry);
-        }
+      if (entryIndex !== -1) {
+        items[entryIndex] = entry;
+      } else {
+        items = [...items, entry];
+      }
+    }
 
-        localStorage?.setItem(CART_STORAGE_KEY, JSON.stringify(items));
-      },
-      remove: () => {
-        localStorage?.setItem(
-          CART_STORAGE_KEY,
-          JSON.stringify(items.filter((_, index) => index !== entryIndex))
-        );
-      },
-    }[operation]());
+    localStorage?.setItem(CART_STORAGE_KEY, JSON.stringify(items));
   }
 
   static loadCart(): CartItem[] {

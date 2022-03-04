@@ -2,7 +2,7 @@ import { VFC } from 'react';
 import Link from 'next/link';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ProductDetails } from 'pages/api/products/[id]';
-import { Cart } from 'models';
+import { Cart, CartOperations } from 'models';
 import { CART_SIZE_QUERY_KEY, Skeleton } from 'components/shared';
 import { CART_ITEMS_QUERY_KEY } from 'pages/cart';
 
@@ -39,15 +39,21 @@ export const CartItem: VFC<CartItemProps> = ({
         ? fetch(`/api/products/${productId}`).then((res) => res.json())
         : null
   );
-  const removeFromCart = useMutation(
+  const { mutate: updateCart, isLoading: updatingCart } = useMutation(
     async ({
       productId,
       size,
+      operation,
     }: {
       productId: string | number;
-      size: number;
+      size: string | number;
+      operation: CartOperations;
     }) => {
-      Cart.updateCart({ id: productId, size, operation: 'remove' });
+      Cart.updateCart({
+        id: productId,
+        size,
+        operation,
+      });
       return { productId, size };
     },
     {
@@ -78,10 +84,44 @@ export const CartItem: VFC<CartItemProps> = ({
               <Skeleton loading={isLoading} width={150} height={24} />
             )}
 
-            <div className="quantity">Quantity: {quantity}</div>
-
             <div className="shoe-size">Size: {size}</div>
 
+            <div className="quantity">
+              <button
+                disabled={updatingCart}
+                onClick={(e) => {
+                  e.stopPropagation();
+
+                  updateCart({
+                    productId,
+                    size,
+                    operation: CartOperations.DECREASE,
+                  });
+                }}
+              >
+                -
+              </button>
+
+              <span aria-label="quantity">{quantity}</span>
+
+              <button
+                disabled={updatingCart}
+                onClick={(e) => {
+                  e.stopPropagation();
+
+                  updateCart({
+                    productId,
+                    size,
+                    operation: CartOperations.ADD,
+                  });
+                }}
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <div className="price-container">
             {product ? (
               product.originalPrice && (
                 <div className="original-price">
@@ -95,22 +135,7 @@ export const CartItem: VFC<CartItemProps> = ({
             {product?.price ? (
               <div className="price">${product.price.toFixed(2)}</div>
             ) : (
-              <Skeleton loading={isLoading} width={90} height={20} />
-            )}
-          </div>
-
-          <div className="actions">
-            {product ? (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeFromCart.mutate({ productId, size });
-                }}
-              >
-                Remove
-              </button>
-            ) : (
-              <Skeleton loading={isLoading} width={90} height={43} />
+              <Skeleton loading={isLoading} width={90} height={28} />
             )}
           </div>
         </div>
@@ -141,7 +166,7 @@ export const CartItem: VFC<CartItemProps> = ({
           }
 
           .cart-item .info > div {
-            line-height: 1.6;
+            line-height: 2;
           }
 
           .cart-item .info .item-name {
@@ -149,7 +174,20 @@ export const CartItem: VFC<CartItemProps> = ({
             font-weight: 500;
           }
 
-          .cart-item .actions {
+          .cart-item .quantity {
+            margin-top: 8px;
+          }
+
+          .cart-item .quantity button:not(:first-child) {
+            margin-left: 8px;
+          }
+
+          .cart-item .quantity button:not(:last-child) {
+            margin-right: 8px;
+          }
+
+          .cart-item .price-container {
+            font-size: 20px;
             margin-right: 24px;
           }
 
@@ -169,11 +207,12 @@ export const CartItem: VFC<CartItemProps> = ({
               margin: 16px;
             }
 
-            .cart-item .actions {
+            .cart-item .price-container {
               margin-right: unset;
               width: 100%;
               display: flex;
-              justify-content: center;
+              align-items: center;
+              flex-direction: column;
             }
           }
         `}
