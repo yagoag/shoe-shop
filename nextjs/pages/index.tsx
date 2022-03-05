@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useQuery } from 'react-query';
 import { ItemCard, Product } from 'components/details';
-import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
   const { data, isLoading } = useQuery<Product[]>('list-products', () =>
@@ -10,7 +9,7 @@ const Home: NextPage = () => {
   );
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Shoe Shop</title>
       </Head>

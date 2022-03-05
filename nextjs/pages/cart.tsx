@@ -30,6 +30,14 @@ const Cart = () => {
           ))
         )}
       </div>
+
+      <style jsx>{`
+        .empty-cart {
+          font-size: 20px;
+          color: #a7a2a9;
+          margin: 64px 0;
+        }
+      `}</style>
     </>
   );
 };

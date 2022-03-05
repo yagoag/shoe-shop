@@ -110,6 +110,71 @@ const ProductPage = () => {
           )}
         </div>
       </div>
+
+      <style jsx>{`
+        .item-page {
+          display: flex;
+        }
+
+        .item-page img {
+          width: 50%;
+          max-height: auto;
+        }
+
+        .item-page > div {
+          flex: 1;
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin-left: 36px;
+        }
+
+        .item-page .price,
+        .item-page .item-name {
+          font-size: 24px;
+        }
+
+        .item-page .price {
+          margin: 8px 0;
+        }
+
+        .item-page .item-name {
+          margin-bottom: 16px;
+        }
+
+        .item-page .shoe-size {
+          margin: 16px 0 32px 0;
+        }
+
+        .item-page .shoe-size select {
+          font-size: 16px;
+        }
+
+        .item-page button {
+          margin-top: 16px;
+        }
+
+        @media screen and (max-width: 768px) {
+          .item-page {
+            flex-direction: column;
+          }
+
+          .item-page img {
+            width: 100%;
+            max-height: auto;
+          }
+
+          .item-page > div {
+            margin-left: 0;
+            margin-top: 16px;
+          }
+
+          .item-page .shoe-size {
+            margin: 8px 0;
+          }
+        }
+      `}</style>
     </>
   );
 };

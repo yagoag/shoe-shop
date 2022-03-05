@@ -59,6 +59,60 @@ export const Layout: FC = ({ children }) => {
           .
         </div>
       </footer>
+
+      <style jsx>{`
+        header {
+          padding: 32px;
+          display: flex;
+          justify-content: center;
+        }
+
+        header .content {
+          flex: 1;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          max-width: 600px;
+        }
+
+        header .content button {
+          background: none;
+          color: #000000;
+          font-size: 16px;
+        }
+
+        header .content h1 {
+          margin: 0;
+          padding: 0;
+          font-size: 32px;
+          font-weight: 500;
+          text-transform: uppercase;
+          color: #172a3a;
+          cursor: pointer;
+          text-align: center;
+        }
+
+        header .content .cart > span {
+          background-color: #000000;
+          color: #ffffff;
+          padding: 0 4px 0 6px;
+          border-radius: 50vh;
+          font-size: 14px;
+        }
+
+        main,
+        footer {
+          display: flex;
+          justify-content: center;
+        }
+
+        footer .content {
+          flex: 1;
+          max-width: 810px;
+          padding: 32px;
+          text-align: center;
+        }
+      `}</style>
     </>
   );
 };
